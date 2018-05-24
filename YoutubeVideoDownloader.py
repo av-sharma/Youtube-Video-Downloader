@@ -1,15 +1,34 @@
 from pytube import YouTube
+import os
 
 print("Enter Link: ")
-link = input()
+url = input()
 
-print("Enter Destination: ")
-destination = input()
+destination = os.getcwd()
 
-yt = YouTube(link)
+try:
+    #object creation using YouTube which was imported in the beginning
+    yt = YouTube(url)
+except:
+    print("Connection Error")
 
-# Currently it downloads only the best available quality
-yt.streams.first().download(destination)
-#print(yt.streams.filter(progressive=True).all())
-	
-print("Download Successful")
+# Show list of available streams
+list = yt.streams.filter(progressive=True, subtype='mp4').order_by('resolution').desc().all()
+list = str(list).split(',')
+size = len(list)
+for x in range (0, size):
+	temp = list[x]
+	pos = temp.index('res')
+	print(x,'. ', list[x][pos+5:pos+4+5])
+
+print("Enter Index: ")
+index = int(input())
+
+i = list[index].index("itag")
+itag = list[index][i+6:i+8]
+
+try:
+	yt.streams.get_by_itag(int(itag)).download()
+	print("Download Successful")
+except:
+	print("Connection Error")
