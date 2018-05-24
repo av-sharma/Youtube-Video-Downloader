@@ -28,7 +28,7 @@ i = list[index].index("itag")
 itag = list[index][i+6:i+8]
 
 try:
-	yt.streams.get_by_itag(int(itag)).download()
+	yt.streams.get_by_itag(int(itag)).download(destination)
 	print("Download Successful")
 except:
 	print("Connection Error")
