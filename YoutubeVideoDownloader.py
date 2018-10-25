@@ -12,7 +12,7 @@ try:
 except:
     print("Connection Error")
 
-# Show list of available streams
+# Show list of all the available streams
 list = yt.streams.filter(progressive=True, subtype='mp4').order_by('resolution').desc().all()
 list = str(list).split(',')
 size = len(list)
